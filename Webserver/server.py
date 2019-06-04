@@ -21,21 +21,24 @@ def index():
         return render_template('index.html')
     if request.method == 'POST':
         # 파라미터 받기
+        name = str(request.form['name'])
         age = float(request.form['age'])
         sex = float(request.form['sex'])
         pclass = float(request.form['pclass'])
-        fellow = float(request.form['fellow'])
+        sibling = float(request.form['sibling'])
+        parent = float(request.form['parent'])
+        fare = float(request.form['fare'])
 
     with graph.as_default():
         # 변수 선언
         survive = 0
 
         # 입력된 파라미터를 배열 형태로
-        data = np.array([pclass, sex, age, fellow]).reshape(1,4)
+        data = np.array([pclass, sex, age, sibling, parent, fare]).reshape(1,6)
         dict = model.predict(data)
         survive = dict[0]*100
 
-        return render_template('index.html', survive=survive)
+        return render_template('index.html', name=name, survive=survive)
 
 if __name__ == '__main__':
    app.run(debug = True)
